@@ -15,11 +15,11 @@
     body, html {
       height: 100%;
       font-family: 'Poppins', sans-serif;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.6);
+      color: #333;
+      background: rgba(228, 87, 82, 0.397);
     }
 
-    .bg-video {
+    .bg-image {
       position: fixed;
       top: 0;
       left: 0;
@@ -27,7 +27,7 @@
       height: 100vh;
       object-fit: cover;
       z-index: -1;
-      filter: blur(4px) brightness(0.5);
+      filter: blur(6px) brightness(0.8);
     }
 
     .container {
@@ -44,25 +44,29 @@
     h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
+      color: #ffffff;
     }
 
     .countdown {
       font-size: 2rem;
       margin: 2rem 0;
       text-align: center;
+      color: #ffffff;
     }
 
     section {
       margin-bottom: 2.5rem;
-      background-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(102, 109, 3, 0.6);
       padding: 1.5rem;
       border-radius: 15px;
       backdrop-filter: blur(10px);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
 
     h2 {
       font-size: 1.8rem;
       margin-bottom: 1rem;
+      color: #ffffff;
     }
 
     ul {
@@ -72,25 +76,38 @@
 
     ul li::before {
       content: "\2022";
-      color: #ffcc00;
+      color: #ffffff;
       font-weight: bold;
       display: inline-block;
       width: 1em;
       margin-left: -1em;
     }
 
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .gallery img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
     footer {
       text-align: center;
       font-size: 0.9rem;
       margin-top: 4rem;
+      color: #6d2121;
     }
   </style>
 </head>
 <body>
-  <video autoplay muted loop class="bg-video">
-    <source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-ocean-cliffs-6955/1080p.mp4" type="video/mp4">
-    Votre navigateur ne supporte pas la vidéo.
-  </video>
+  <!--><img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=1600&q=80" class="bg-image" alt="Fond joyeux et estival">-->
+  #<img src="https://www.happy-mr.com/wp-content/uploads/2024/10/voyages-adaptes-handicap-%C2%A9-Publi-Co-Pixabay.jpg" class="bg-image" alt="Fond joyeux et estival">
+  <img src="https://www.leparisien.fr/resizer/cAWVMpXA6e0-2ndHoIsqb2GFKrE=/932x582/arc-anglerfish-eu-central-1-prod-leparisien.s3.amazonaws.com/public/BNM6JT3TNMBTIHPAGYFLJHO3EQ.jpg" class="bg-image" alt="Fond joyeux et estival">
 
   <div class="container">
     <header>
@@ -110,7 +127,14 @@
 
     <section>
       <h2>L'ambiance</h2>
-      <p>Des souvenirs inoubliables entre amis 🌞🌊</p>
+      <p>Des souvenirs inoubliables entre amis 🌞</p>
+    </section>
+
+    <section>
+      <h2>Important...</h2>
+      <div class="météo">
+        <img src="meteo.png" alt="météo">
+      </div>
     </section>
 
     <section>
@@ -126,7 +150,7 @@
 
   <script>
     const countdownEl = document.getElementById("countdown");
-    const departureDate = new Date("2025-07-03T08:00:00").getTime();
+    const departureDate = new Date("2025-07-03T06:15:00").getTime();
 
     function updateCountdown() {
       const now = new Date().getTime();
