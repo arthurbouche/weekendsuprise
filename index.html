@@ -32,7 +32,7 @@
 
     .container {
       padding: 4rem;
-      max-width: 900px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -100,14 +100,86 @@
       text-align: center;
       font-size: 0.9rem;
       margin-top: 4rem;
-      color: #ffffff;
+      color: rgb(70, 75, 2);
+    }
+    mark {
+      background-color: yellow;
+      cursor: pointer;
+    }
+    /* Overlay de galerie */
+    .gallery-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 1000;
+    }
+
+    .gallery-overlay img {
+      max-width: 80%;
+      max-height: 80vh;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+    }
+
+    .nav-btn {
+      font-size: 2rem;
+      color: white;
+      background: none;
+      border: none;
+      cursor: pointer;
+      margin: 1rem;
+      user-select: none;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .galleryid {
+      display: flex;
+      gap: 10px;
+      overflow: hidden;
+      margin: 20px 0;
+    }
+
+    .galleryid img {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px solid #ccc;
+      transition: transform 0.3s;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
   <!--><img src="https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=1600&q=80" class="bg-image" alt="Fond joyeux et estival">-->
   #<img src="https://www.happy-mr.com/wp-content/uploads/2024/10/voyages-adaptes-handicap-%C2%A9-Publi-Co-Pixabay.jpg" class="bg-image" alt="Fond joyeux et estival">
-  <img src="https://www.leparisien.fr/resizer/cAWVMpXA6e0-2ndHoIsqb2GFKrE=/932x582/arc-anglerfish-eu-central-1-prod-leparisien.s3.amazonaws.com/public/BNM6JT3TNMBTIHPAGYFLJHO3EQ.jpg" class="bg-image" alt="Fond joyeux et estival">
+  <img src="https://www.leparisien.fr/resizer/cAWVMpXA6e0-2ndHoIsqb2GFKrE=/932x582/arc-anglerfish-eu-central-1-prod-leparisien.s3.amazonaws.com/public/BNM6JT3TNMBTIHPAGYFLJHO3EQ.jpg"  class="bg-image" alt="Fond joyeux et estival">
 
   <div class="container">
     <header>
@@ -119,21 +191,46 @@
       <h2>Ce que tu dois savoir</h2>
       <ul>
         <li>📍 Point de rendez-vous : Aéroport de Nantes</li>
-        <li>🕒 Heure de départ : Jeudi 3 juillet - matin</li>
-        <li>🎒 Emporte : affaires d'été, maillot, baskets confortables</li>
-        <li>💰 Budget : tout est inclus, juste un peu d'argent de poche</li>
+        <li>🕒 Heure de départ : Jeudi 3 juillet 05.15 du matin (sur place), faudra pas louper son réveil (n'est ce pas les chagui ^^)</li>
+        <li>🎒 Liste des affaire à emporter : <mark onclick="openGallery()"> ICI </mark></li>
+
+        <li>💰 Budget : tout est inclus, juste un peu d'argent de poche, il suffit de trouver le bon DAB</li>
       </ul>
     </section>
 
     <section>
       <h2>L'ambiance</h2>
-      <p>Des souvenirs inoubliables entre amis 🌞</p>
+      <p>Il y a des moments qu’on ne prévoit pas, mais qu’on n’oubliera jamais. Ce voyage surprise en fait partie. Entre rires spontanés, détours imprévus et nuits pleines d’étoiles, ce que nous avons partagé dépasse les paysages.
+
+Chaque regard émerveillé, chaque chanson chantée trop fort dans la voiture, chaque fou rire pour une bêtise... tout devient un souvenir gravé dans le cœur.
+
+Ce ne sont pas juste des photos qu’on ramène, mais une complicité renforcée, des anecdotes à raconter mille fois, et une promesse silencieuse : celle de repartir un jour, ensemble, sans prévenir.
+
+Parce qu’au fond, ce qui rend un voyage inoubliable, ce sont les amis qui le rendent vivant. 🌞 <br> Par Arthur Bouché ; Feat ChatGPT</p>
     </section>
 
     <section>
-      <h2>Important...</h2>
+      <h2>Météo sur place...</h2>
       <div class="météo">
-        <img src="meteo.png" alt="météo">
+        <img src="meteo.png" width="100%" alt="météo">
+      </div>
+    </section>
+
+    <section> 
+      <h2>Petit jeu</h2>
+      <p>Entre une ville pour voir si tu arrives à trouver où on va, tu peux essayer plusieurs fois :)</p>
+      <input style="width: 300px; height: 40px; font-size: 1.1rem;" type="text" id="cityInput" placeholder="Ex : Cap d'agde">
+    <button onclick="checkCity()">Vérifier</button>
+        <div id="result"></div>
+    </section>
+
+    <section>
+      <h2>Les incarcérés... euh les voyageurs :)</h2>
+        <div class="galleryid" id="galleryid"></div>
+
+      <div class="buttons">
+        <button id="prevBtn">⬅️ Avant le voyage</button>
+        <button id="nextBtn">➡️ Après le voyage</button>
       </div>
     </section>
 
@@ -144,8 +241,15 @@
 
     <footer>
       Contacte-moi si tu paniques trop 😄<br>
-      – Ton/ta guide mystère
+      – Arthur Bouché
     </footer>
+    <div class="gallery-overlay" id="gallery">
+    <button class="close-btn" onclick="closeGallery()">❌</button>
+    <button class="nav-btn" onclick="prevImage()">⬅️</button>
+    <img id="galleryImage" src="" alt="Image">
+    <button class="nav-btn" onclick="nextImage()">➡️</button>
+  </div>
+
   </div>
 
   <script>
@@ -171,6 +275,153 @@
 
     setInterval(updateCountdown, 1000);
     updateCountdown();
+     
+    const paris = { lat: 43.269827, lon: -2.945945 };
+    let lastDistance = null;
+
+    function getDistance(coord1, coord2) {
+      const R = 6371; // rayon terrestre en km
+      const dLat = (coord2.lat - coord1.lat) * Math.PI / 180;
+      const dLon = (coord2.lon - coord1.lon) * Math.PI / 180;
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(coord1.lat * Math.PI / 180) * Math.cos(coord2.lat * Math.PI / 180) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    async function checkCity() {
+      const city = document.getElementById("cityInput").value.trim();
+      const result = document.getElementById("result");
+
+      if (!city) {
+        result.innerText = "Merci d’entrer une ville.";
+        return;
+      }
+      if(city === "bilbao" || city === "Bilbao"){
+        alert("Bien joué, tu as trouvé Bilbao mais on ne va pas là du tout ^^ Tu croyais vraiment que j'allais te dire la ville 😅 !");
+        return;
+      }
+
+      const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(city)}`;
+
+      try {
+        const response = await fetch(url, {
+          headers: { 'User-Agent': 'GeoDistanceGame/1.0 (contact@example.com)' }
+        });
+        const data = await response.json();
+
+        if (data.length === 0) {
+          result.innerText = "Ville non trouvée.";
+          return;
+        }
+
+        const location = {
+          lat: parseFloat(data[0].lat),
+          lon: parseFloat(data[0].lon)
+        };
+
+        const distance = getDistance(paris, location);
+        let message = `La ville "${city}" est à environ ${Math.round(distance)} km de Paris.`;
+
+        if (lastDistance !== null) {
+          if (distance < lastDistance) {
+            message = " 🔥 Tu te rapproches !";
+          } else if (distance > lastDistance) {
+            message = " ❄️ Tu t'éloignes.";
+          } else {
+            message = " 📍 Même distance que la précédente.";
+          }
+        }else{
+            message = " Du premier coup ça aurait été beau";
+        }
+        lastDistance = distance;
+        alert(message);
+        result.innerText = message;
+      } catch (error) {
+        console.error(error);
+        result.innerText = "Erreur lors de la récupération des données.";
+      }
+    }
+  
+    const images = [
+      "habit.png",
+      "habitV.png"
+    ];
+    let current = 0;
+
+    function openGallery() {
+      document.getElementById("gallery").style.display = "flex";
+      showImage(current);
+    }
+
+    function closeGallery() {
+      document.getElementById("gallery").style.display = "none";
+    }
+
+    function showImage(index) {
+      const img = document.getElementById("galleryImage");
+      img.src = images[index];
+    }
+
+    function prevImage() {
+      current = (current - 1 + images.length) % images.length;
+      showImage(current);
+    }
+
+    function nextImage() {
+      current = (current + 1) % images.length;
+      showImage(current);
+    }
+    // Groupes d’images (tu peux changer les URLs par les tiennes)
+    const imageSets = [
+      [
+        'photoI/cha.png',
+        'photoI/Francois.png',
+        'photoI/julieP.png',
+        'photoI/JulieR.png',
+        'photoI/clemence.png',
+        'photoI/arthur.png',
+        'photoI/guigui.png'
+      ],
+      [
+        'photoI/photoB/cha.png',
+        'photoI/photoB/Francois.png',
+        'photoI/photoB/julieP.png',
+        'photoI/photoB/julieR.png',
+        'photoI/photoB/clemence.png',
+        'photoI/photoB/arthur.png',
+        'photoI/photoB/guigui.png'
+      ]
+    ];
+
+    let currentIndex = 0;
+    const galleryid = document.getElementById('galleryid');
+
+    function rendergalleryid(index) {
+      galleryid.innerHTML = '';
+      imageSets[index].forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        galleryid.appendChild(img);
+      });
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + imageSets.length) % imageSets.length;
+      currentIndex = 0;
+      rendergalleryid(currentIndex);
+    });
+
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % imageSets.length;
+      currentIndex = 1;
+      rendergalleryid(currentIndex);
+    });
+
+    // Initial affichage
+    rendergalleryid(currentIndex);
   </script>
+
 </body>
 </html>
